@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CheckStyle-IDEA">
+    <option name="configuration">
+      <map>
+        <entry key="checkstyle-version" value="8.16" />
+        <entry key="copy-libs" value="true" />
+        <entry key="location-0" value="BUNDLED:(bundled):Sun Checks" />
+        <entry key="location-1" value="BUNDLED:(bundled):Google Checks" />
+        <entry key="scan-before-checkin" value="false" />
+        <entry key="scanscope" value="JavaOnly" />
+        <entry key="suppress-errors" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" project-jdk-name="Haskell Tool Stack" project-jdk-type="Haskell Tool Stack SDK" />
+  <component name="ScalaSbtSettings">
+    <option name="customVMEnabled" value="true" />
+    <option name="customVMPath" value="C:/Program Files/Java/jdk-11.0.1" />
+  </component>
+</project>
