@@ -1,8 +1,11 @@
 import React from 'react';
-import {Screen} from "../../App";
+import {Role} from "../../werewolf/Role";
+import {Player} from "../../werewolf/Player";
+import {Artifact} from "../../werewolf/Artifact";
 
-const Game = ({setScreen}: {setScreen: any}) => {
-    return <button onClick={() => setScreen(Screen.Setup)}> Back to Setup </button>
+const Game = ({players, roles, artifacts, onExitGame}:
+                  {players: Array<Player>, roles: Array<Role>, artifacts: Array<Artifact>, onExitGame: any}) => {
+    return <button onClick={onExitGame}> Back to Setup </button>
 }
 
 export default Game;

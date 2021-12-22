@@ -3,8 +3,51 @@ import {Role} from "../../../werewolf/Role";
 import RoleComponent from "./RoleComponent";
 import {Faction} from "../../../werewolf/Faction";
 
-const ChooseRoles = () => {
-    const [ roles, setRoles ] = useState<Array<Role>>([]);
+const ChooseRoles = ({roles, setRoles}: {roles: Array<Role>, setRoles: any}) => {
+    const removeRole = (roleToRemove: Role) => {
+        setRoles(roles.filter(role => role !== roleToRemove));
+    }
+
+    const copyRole = (roleToCopy: Role) => {
+        const roleToCopyIdx: number = roles.indexOf(roleToCopy);
+
+        if(roleToCopyIdx === -1) {
+            return;
+        }
+
+        setRoles(
+            roles.slice(0, roleToCopyIdx + 1)
+            .concat(
+                Role.copy(roleToCopy),
+                roles.slice(roleToCopyIdx + 1, roles.length)
+            ));
+    }
+
+    const moveRoleUp = (roleToMove: Role) => {
+        const roleToMoveIdx: number = roles.indexOf(roleToMove);
+
+        if(roleToMoveIdx === -1 || roleToMoveIdx === 0) {
+            return;
+        }
+
+        setRoles(roles.map((role, idx) =>
+            (idx === roleToMoveIdx) ? roles[roleToMoveIdx - 1]
+                : (idx === roleToMoveIdx - 1) ? roles[roleToMoveIdx]
+                : role));
+    }
+
+    const moveRoleDown = (roleToMove: Role) => {
+        const roleToMoveIdx: number = roles.indexOf(roleToMove);
+
+        if(roleToMoveIdx === -1 || roleToMoveIdx === roles.length - 1) {
+            return;
+        }
+
+        setRoles(roles.map((role, idx) =>
+            (idx === roleToMoveIdx) ? roles[roleToMoveIdx + 1]
+                : (idx === roleToMoveIdx + 1) ? roles[roleToMoveIdx]
+                : role));
+    }
 
     return (
         <div>
@@ -18,16 +61,21 @@ const ChooseRoles = () => {
                         <th>Nightly Action</th>
                     </tr>
                 </thead>
-                <tbody>{roles.map(role => <RoleComponent role={role}/>)}</tbody>
+                <tbody>
+                {roles.map(role => <RoleComponent
+                    role={role}
+                    removeRole={removeRole}
+                    copyRole={copyRole}
+                    moveRoleUp={moveRoleUp}
+                    moveRoleDown={moveRoleDown}/>)}
+                </tbody>
             </table>
             <NewRoleComponent roles={roles} setRoles={setRoles}/>
         </div>
     );
-};
+}
 
-
-
-const NewRoleComponent = ({roles, setRoles}: {roles: Array<Role>, setRoles: React.Dispatch<React.SetStateAction<Array<Role>>>}) => {
+const NewRoleComponent = ({roles, setRoles}: {roles: Array<Role>, setRoles: any}) => {
     const roleNames: Array<string> = Object.keys(Role.roleFactoryMap).concat("Custom");
     const [ newRoleName, setNewRoleName ] = useState(roleNames[0]);
 
@@ -50,7 +98,7 @@ const NewRoleComponent = ({roles, setRoles}: {roles: Array<Role>, setRoles: Reac
     }
 }
 
-const RoleDropdown = ({roleNames, setNewRole}: {roleNames: Array<string>, setNewRole: React.Dispatch<React.SetStateAction<string>>}) => {
+const RoleDropdown = ({roleNames, setNewRole}: {roleNames: Array<string>, setNewRole: any}) => {
     return (
         <select name={"roles"} id={"roles"} onChange={e => setNewRole(e.currentTarget.value)}>
             {roleNames.map(role => <option value={role}>{role}</option>)}
@@ -58,7 +106,7 @@ const RoleDropdown = ({roleNames, setNewRole}: {roleNames: Array<string>, setNew
     );
 }
 
-const CustomRoleComponent = ({roles, setRoles}: {roles: Array<Role>, setRoles: React.Dispatch<React.SetStateAction<Array<Role>>>}) => {
+const CustomRoleComponent = ({roles, setRoles}: {roles: Array<Role>, setRoles: any}) => {
     const [ roleName, setRoleName ] = useState<string>("");
     const [ faction, setFaction ] = useState<Faction>(Faction.Villagers);
     const [ firstNightAction, setFirstNightAction ] = useState<boolean>(false);

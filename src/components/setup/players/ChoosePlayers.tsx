@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import PlayerComponent from "./PlayerComponent";
 
-const ChoosePlayers = () => {
-    const [ players, setPlayers ] = useState<Array<string>>([]);
+const ChoosePlayers = ({players, setPlayers}: {players: Array<string>, setPlayers: any}) => {
     const [ newPlayer, setNewPlayer ] = useState("");
     const [ errorMsg, setErrorMsg ] = useState("");
 
@@ -19,9 +18,16 @@ const ChoosePlayers = () => {
     return (
         <div>
             <h2>Players</h2>
-            <ul>
-                { players.map(player => <li><PlayerComponent name={player} players={players} setPlayers={setPlayers}/></li>) }
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { players.map(player => <PlayerComponent name={player} players={players} setPlayers={setPlayers}/>) }
+                </tbody>
+            </table>
             <br/>
             <div>
                 <input value={newPlayer}
@@ -31,8 +37,7 @@ const ChoosePlayers = () => {
                 {errorMsg}
             </div>
         </div>
-
-    )
+    );
 }
 
 export default ChoosePlayers;

@@ -26,8 +26,23 @@ class Artifact {
         this.factionOverride = factionOverride;
     }
 
+    static copy(other: Artifact) {
+        return new Artifact(other.name,
+            other.isDayActionArtifact,
+            other.isNightActionArtifact,
+            other.isFirstNightActionArtifact,
+            other.overridesPlayerFaction,
+            other.factionOverride);
+    }
+
     static none() : Artifact {
         return new Artifact("");
+    }
+
+    static artifactFactoryMap: { [artifact: string]: Function} = {
+        "Youth": () => {
+            return new Artifact("Youth");
+        }
     }
 }
 
